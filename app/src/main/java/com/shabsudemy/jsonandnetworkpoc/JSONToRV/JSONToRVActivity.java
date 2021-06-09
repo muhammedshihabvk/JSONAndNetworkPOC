@@ -47,7 +47,7 @@ public class JSONToRVActivity extends AppCompatActivity implements AsyncResponse
         Log.d("TAG", "1");
         dataModelList = new ArrayList<>();
 
-        GetData getData = new GetData("https://run.mocky.io/v3/c95e6108-a50a-4c27-b3c1-0b357f3e33de", this);
+        GetData getData = new GetData("https://jsonplaceholder.typicode.com/photos", this);
         getData.execute();
         Log.d("TAG", "2");
 
