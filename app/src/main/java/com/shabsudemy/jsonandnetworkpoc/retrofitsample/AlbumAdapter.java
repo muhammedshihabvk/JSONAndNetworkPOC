@@ -11,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.request.RequestOptions;
 import com.shabsudemy.jsonandnetworkpoc.R;
 
 import java.util.List;
@@ -41,12 +39,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
 
         Glide.with(context).asBitmap().load("https://assets.ajio.com/medias/sys_master/root/h9c/h37/15678460395550/-1117Wx1400H-461001523-multi-MODEL.jpg").into(holder.imageView);
         //        "https://assets.ajio.com/medias/sys_master/root/h9c/h37/15678460395550/-1117Wx1400H-461001523-multi-MODEL.jpg"
-//
-//        Glide.with(context)
-//                .asBitmap()
-//                .apply(RequestOptions.circleCropTransform())
-//                .load(dataModelAlbumList.get(position).getSmallUrl())
-//                .into(holder.imageView);
+        //
+        //        Glide.with(context)
+        //                .asBitmap()
+        //                .apply(RequestOptions.circleCropTransform())
+        //                .load(dataModelAlbumList.get(position).getSmallUrl())
+        //                .into(holder.imageView);
     }
 
     @Override
