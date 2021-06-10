@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.shabsudemy.jsonandnetworkpoc.JSONToRV.JSONToRVActivity;
+import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.RetrofitMVVMActivity;
 import com.shabsudemy.jsonandnetworkpoc.retrofitsample.RetrofitPOCActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -54,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.recyclerviewButton2:
                 i= new Intent(this, RetrofitPOCActivity.class);
+                startActivity(i);
+                break;
+            case R.id.recyclerviewButton3:
+                i= new Intent(this, RetrofitMVVMActivity.class);
                 startActivity(i);
                 break;
             default:

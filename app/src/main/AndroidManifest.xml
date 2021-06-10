@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JsonAndNetworkPOC">
-        <activity android:name=".retrofitsample.RetrofitPOCActivity"></activity>
+        <activity android:name=".retrofitMVVM.RetrofitMVVMActivity" android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"></activity>
+        <activity android:name=".retrofitsample.RetrofitPOCActivity" />
         <activity android:name=".JSONToRV.JSONToRVActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
