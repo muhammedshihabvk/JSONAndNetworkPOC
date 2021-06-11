@@ -19,20 +19,22 @@ import java.util.List;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyViewHolder> {
 
-    Context context;
+
     List<Movie> movieList;
     private OnMovieListener onMovieListener;
 
-    public MovieListAdapter(Context context, List<Movie> movieList, OnMovieListener onMovieListener) {
-        this.context = context;
-        this.movieList = movieList;
+    public MovieListAdapter( OnMovieListener onMovieListener) {
         this.onMovieListener = onMovieListener;
+    }
+
+    public void setMovieList(List<Movie> movieList) {
+        this.movieList = movieList;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.movie_list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_list_item, parent, false);
         return new MyViewHolder(v, onMovieListener);
     }
 
@@ -40,15 +42,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
     public void onBindViewHolder(@NonNull MovieListAdapter.MyViewHolder holder, int position) {
         ((MyViewHolder) holder).ratingBar.setRating(3);
         ((MyViewHolder) holder).title.setText(movieList.get(position).getTitle());
-        ((MyViewHolder) holder).imdId.setText(movieList.get(position).getImdbID());
-        ((MyViewHolder) holder).year.setText(movieList.get(position).getYear());
+        ((MyViewHolder) holder).imdId.setText("imdbID"+movieList.get(position).getImdbID());
+        ((MyViewHolder) holder).year.setText("Year"+String.valueOf(movieList.get(position).getYear()));
 
         Glide.with(holder.itemView.getContext()).load(movieList.get(position).getPosterURL()).into(((MyViewHolder) holder).posterImage);
     }
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        if(movieList!=null){
+            return movieList.size();
+        }
+        return 0;
     }
 
 
