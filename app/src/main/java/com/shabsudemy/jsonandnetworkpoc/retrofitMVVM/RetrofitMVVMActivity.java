@@ -8,12 +8,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.shabsudemy.jsonandnetworkpoc.R;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.models.Movie;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.models.MovieDetails;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.models.MovieResponse;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.request.Service;
+import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.viewmodels.RetrofitMVVMViewModel;
 
 import java.util.List;
 
@@ -25,6 +28,8 @@ public class RetrofitMVVMActivity extends AppCompatActivity {
     Button button1;
     EditText editText;
 
+    private RetrofitMVVMViewModel retrofitMVVMViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,20 +37,39 @@ public class RetrofitMVVMActivity extends AppCompatActivity {
         button1 = findViewById(R.id.moviebutton1);
         editText = findViewById(R.id.movieEditText);
 
+        retrofitMVVMViewModel = new ViewModelProvider(this).get(RetrofitMVVMViewModel.class);
+
+        ObserveDataChange();
+
+
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!(editText.getText().length() <= 0)) {
-//                    getMovieList(editText.getText().toString());
-//                    getMovieList("Batman");
-
-                    getMovieDetailById("tt0080684");
-                }else{
-                    Toast.makeText(RetrofitMVVMActivity.this, "place enter movie/series name", Toast.LENGTH_SHORT).show();
-                }
-
+                movieApiCall(String.valueOf(editText.getText()));
             }
         });
+
+    }
+
+    //        Observing any data change
+    private void ObserveDataChange() {
+            retrofitMVVMViewModel.getmMovies().observe(this, new Observer<List<Movie>>() {
+                @Override
+                public void onChanged(List<Movie> movies) {
+//                    this will observe data chages of movie list
+                    Log.d("TAG","Data changed on observe value");
+                    if(movies!=null){
+                        for(Movie m : movies){
+                            Log.d("TAG",m.getTitle());
+                        }
+                    }
+
+                }
+            });
+    }
+
+    private void movieApiCall(String movieName){
+        retrofitMVVMViewModel.getMovieCall(movieName);
     }
 
     private void getMovieList(String movieText) {
@@ -56,10 +80,10 @@ public class RetrofitMVVMActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 Log.d("TAG", call.request().url().toString()); ////to print generated url
-                Log.d("TAG",String.valueOf(response.code()));
+                Log.d("TAG", String.valueOf(response.code()));
                 if (response.isSuccessful()) {
                     List<Movie> movieList = response.body().getMovieList();
-                    if(movieList!=null && movieList.size()>0){
+                    if (movieList != null && movieList.size() > 0) {
                         for (Movie movie : movieList) {
                             Log.d("TAG", movie.getTitle());
                         }
@@ -77,13 +101,13 @@ public class RetrofitMVVMActivity extends AppCompatActivity {
         });
     }
 
-    private  void  getMovieDetailById(String movieId){
+    private void getMovieDetailById(String movieId) {
         MovieApi movieApi = Service.getMoviewApi();
-        Call<MovieDetails> movieDetailsCall = movieApi.getMovieDetails(movieId,Credentials.API_KEY);
+        Call<MovieDetails> movieDetailsCall = movieApi.getMovieDetails(movieId, Credentials.API_KEY);
         movieDetailsCall.enqueue(new Callback<MovieDetails>() {
             @Override
             public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
-                Log.d("TAG",String.valueOf(response.body().getRatings().get(0).getValue()));
+                Log.d("TAG", String.valueOf(response.body().getRatings().get(0).getValue()));
             }
 
             @Override
