@@ -1,14 +1,17 @@
 package com.shabsudemy.jsonandnetworkpoc.retrofitMVVM;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +36,7 @@ public class RetrofitMVVMActivity extends AppCompatActivity implements OnMovieLi
     Button button1;
     EditText editText;
     RecyclerView recyclerView;
+    ProgressBar progressBar;
 
     private RetrofitMVVMViewModel retrofitMVVMViewModel;
     private MovieListAdapter movieListAdapter;
@@ -41,52 +45,56 @@ public class RetrofitMVVMActivity extends AppCompatActivity implements OnMovieLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retrofit_mvvmactivity);
+//
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         button1 = findViewById(R.id.moviebutton1);
         editText = findViewById(R.id.movieEditText);
         recyclerView = findViewById(R.id.movieRecyclerView);
+        progressBar = findViewById(R.id.progressBarRV);
 
+//        binding view model with UI
         retrofitMVVMViewModel = new ViewModelProvider(this).get(RetrofitMVVMViewModel.class);
 
         configureRecyclerView();
         ObserveDataChange();
-        
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.getContext().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                progressBar.setVisibility(View.VISIBLE);
                 movieApiCall(String.valueOf(editText.getText()));
-                getApplicationContext().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                editText.onEditorAction(EditorInfo.IME_ACTION_DONE);
             }
         });
-
     }
 
     //        Observing any data change
     private void ObserveDataChange() {
-            retrofitMVVMViewModel.getmMovies().observe(this, new Observer<List<Movie>>() {
-                @Override
-                public void onChanged(List<Movie> movies) {
-
-                    movieListAdapter.setMovieList(movies);
-//                    this will observe data chages of movie list
-                    Log.d("TAG","Data changed on observe value");
-                    if(movies!=null){
-                        for(Movie m : movies){
-                            Log.d("TAG",m.getTitle());
-                        }
+        retrofitMVVMViewModel.getmMovies().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                movieListAdapter.setMovieList(movies);
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                //                    this will observe data chages of movie list
+                Log.d("TAG", "Data changed on observe value");
+                if (movies != null) {
+                    for (Movie m : movies) {
+                        Log.d("TAG", m.getTitle());
                     }
-
                 }
-            });
+
+            }
+        });
     }
 
-    private void movieApiCall(String movieName){
+    private void movieApiCall(String movieName) {
         retrofitMVVMViewModel.getMovieCall(movieName);
     }
 
-    private void configureRecyclerView(){
+    private void configureRecyclerView() {
         movieListAdapter = new MovieListAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(movieListAdapter);
@@ -142,7 +150,10 @@ public class RetrofitMVVMActivity extends AppCompatActivity implements OnMovieLi
 
     @Override
     public void onMovieClick(int position) {
-
+        Log.d("TAG", String.valueOf(position));
+        Intent i = new Intent(this,RetrofitMVVMMovieDetailsActivity.class);
+        i.putExtra("movie",movieListAdapter.getSelectedMovie(position));
+        startActivity(i);
     }
 
     @Override

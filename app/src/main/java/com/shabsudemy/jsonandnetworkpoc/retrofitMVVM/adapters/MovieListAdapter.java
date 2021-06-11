@@ -1,6 +1,5 @@
 package com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +15,22 @@ import com.shabsudemy.jsonandnetworkpoc.R;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.models.Movie;
 
 import java.util.List;
+import java.util.Random;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyViewHolder> {
 
 
     List<Movie> movieList;
+    Random random = new Random();
     private OnMovieListener onMovieListener;
 
-    public MovieListAdapter( OnMovieListener onMovieListener) {
+    public MovieListAdapter(OnMovieListener onMovieListener) {
         this.onMovieListener = onMovieListener;
     }
 
     public void setMovieList(List<Movie> movieList) {
         this.movieList = movieList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -40,20 +42,29 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MovieListAdapter.MyViewHolder holder, int position) {
-        ((MyViewHolder) holder).ratingBar.setRating(3);
+        ((MyViewHolder) holder).ratingBar.setRating(random.nextInt(4));
         ((MyViewHolder) holder).title.setText(movieList.get(position).getTitle());
-        ((MyViewHolder) holder).imdId.setText("imdbID"+movieList.get(position).getImdbID());
-        ((MyViewHolder) holder).year.setText("Year"+String.valueOf(movieList.get(position).getYear()));
+        ((MyViewHolder) holder).imdId.setText("imdbID" + movieList.get(position).getImdbID());
+        ((MyViewHolder) holder).year.setText("Year" + String.valueOf(movieList.get(position).getYear()));
 
         Glide.with(holder.itemView.getContext()).load(movieList.get(position).getPosterURL()).into(((MyViewHolder) holder).posterImage);
     }
 
     @Override
     public int getItemCount() {
-        if(movieList!=null){
+        if (movieList != null) {
             return movieList.size();
         }
         return 0;
+    }
+
+    public  Movie getSelectedMovie(int position){
+        if(movieList!=null){
+            if(movieList.size()>0){
+                return  movieList.get(position);
+            }
+        }
+        return null;
     }
 
 
@@ -73,6 +84,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
             ratingBar = itemView.findViewById(R.id.listItemRatingbar);
             posterImage = itemView.findViewById(R.id.listItemImage);
             this.onMovieListener = onMovieListener;
+            itemView.setOnClickListener(this);
         }
 
         @Override

@@ -69,15 +69,17 @@
                     android:textStyle="italic|bold" />
             </LinearLayout>
 
-            <RatingBar
+            <androidx.appcompat.widget.AppCompatRatingBar
                 android:id="@+id/listItemRatingbar"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:outlineAmbientShadowColor="@color/white"
+                android:outlineSpotShadowColor="#EA0505"
                 android:numStars="5"
-                android:outlineAmbientShadowColor="@color/teal_200"
-                android:outlineSpotShadowColor="@color/white"
-                android:rating="3" />
+                style="@style/Widget.AppCompat.RatingBar"
+                android:isIndicator="true"
+                android:rating="1" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

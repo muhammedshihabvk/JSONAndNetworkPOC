@@ -1,5 +1,6 @@
 package com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.request;
 
+import android.accounts.NetworkErrorException;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -83,6 +84,8 @@ public class MovieApiClient {
 
             } catch (Exception e) {
                 Log.d("TAG","Exception triggerd on run");
+                List<Movie> list = new ArrayList<>();
+                mMovies.postValue(list);
                 e.printStackTrace();
             }
         }
