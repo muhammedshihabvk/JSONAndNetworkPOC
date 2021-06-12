@@ -101,7 +101,7 @@ public class RetrofitMVVMActivity extends AppCompatActivity implements OnMovieLi
     }
 
     private void getMovieList(String movieText) {
-        MovieApi movieApi = Service.getMoviewApi();
+        MovieApi movieApi = new Service().getMoviewApi();
         //        s=Batman
         Call<MovieResponse> responseCall = movieApi.getMovie(movieText, Credentials.API_KEY);
         responseCall.enqueue(new Callback<MovieResponse>() {
@@ -130,7 +130,7 @@ public class RetrofitMVVMActivity extends AppCompatActivity implements OnMovieLi
     }
 
     private void getMovieDetailById(String movieId) {
-        MovieApi movieApi = Service.getMoviewApi();
+        MovieApi movieApi = new Service().getMoviewApi();
         Call<MovieDetails> movieDetailsCall = movieApi.getMovieDetails(movieId, Credentials.API_KEY);
         movieDetailsCall.enqueue(new Callback<MovieDetails>() {
             @Override

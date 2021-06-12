@@ -91,7 +91,7 @@ public class MovieApiClient {
         }
 
         private Call<MovieResponse> getMovie(String movieName) {
-            return Service.getMoviewApi().getMovie(movieName, Credentials.API_KEY);
+            return new Service().getMoviewApi().getMovie(movieName, Credentials.API_KEY);
         }
 
         private void cancelRequest() {
