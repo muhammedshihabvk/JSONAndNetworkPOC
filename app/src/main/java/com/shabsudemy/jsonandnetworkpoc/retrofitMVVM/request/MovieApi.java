@@ -1,4 +1,4 @@
-package com.shabsudemy.jsonandnetworkpoc.retrofitMVVM;
+package com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.request;
 
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.models.MovieDetails;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.models.MovieResponse;

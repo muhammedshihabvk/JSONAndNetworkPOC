@@ -1,6 +1,5 @@
-package com.shabsudemy.jsonandnetworkpoc.retrofitMVVM;
+package com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.request;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 

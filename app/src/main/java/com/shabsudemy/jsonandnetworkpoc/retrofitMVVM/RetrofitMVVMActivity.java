@@ -11,7 +11,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +22,7 @@ import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.adapters.OnMovieListener;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.models.Movie;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.models.MovieDetails;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.models.MovieResponse;
+import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.request.MovieApi;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.request.Service;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.viewmodels.RetrofitMVVMViewModel;
 
@@ -45,16 +45,13 @@ public class RetrofitMVVMActivity extends AppCompatActivity implements OnMovieLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retrofit_mvvmactivity);
-//
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
         button1 = findViewById(R.id.moviebutton1);
         editText = findViewById(R.id.movieEditText);
         recyclerView = findViewById(R.id.movieRecyclerView);
         progressBar = findViewById(R.id.progressBarRV);
 
-//        binding view model with UI
+        //        binding view model with UI
         retrofitMVVMViewModel = new ViewModelProvider(this).get(RetrofitMVVMViewModel.class);
 
         configureRecyclerView();
@@ -78,7 +75,7 @@ public class RetrofitMVVMActivity extends AppCompatActivity implements OnMovieLi
                 movieListAdapter.setMovieList(movies);
                 progressBar.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
-                //                    this will observe data chages of movie list
+//                this will observe data chages of movie list
                 Log.d("TAG", "Data changed on observe value");
                 if (movies != null) {
                     for (Movie m : movies) {
@@ -96,13 +93,27 @@ public class RetrofitMVVMActivity extends AppCompatActivity implements OnMovieLi
 
     private void configureRecyclerView() {
         movieListAdapter = new MovieListAdapter(this);
+        //        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)); //for horizontal layout
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(movieListAdapter);
     }
 
+    @Override
+    public void onMovieClick(int position) {
+        Log.d("TAG", String.valueOf(position));
+        Intent i = new Intent(this, RetrofitMVVMMovieDetailsActivity.class);
+        i.putExtra("movie", movieListAdapter.getSelectedMovie(position));
+        startActivity(i);
+    }
+
+    @Override
+    public void onCategoryClick(String category) {
+
+    }
+
+    //    API Call Sample POC
     private void getMovieList(String movieText) {
         MovieApi movieApi = new Service().getMoviewApi();
-        //        s=Batman
         Call<MovieResponse> responseCall = movieApi.getMovie(movieText, Credentials.API_KEY);
         responseCall.enqueue(new Callback<MovieResponse>() {
             @Override
@@ -129,6 +140,7 @@ public class RetrofitMVVMActivity extends AppCompatActivity implements OnMovieLi
         });
     }
 
+    //    API Call Sample POC
     private void getMovieDetailById(String movieId) {
         MovieApi movieApi = new Service().getMoviewApi();
         Call<MovieDetails> movieDetailsCall = movieApi.getMovieDetails(movieId, Credentials.API_KEY);
@@ -146,18 +158,5 @@ public class RetrofitMVVMActivity extends AppCompatActivity implements OnMovieLi
 
             }
         });
-    }
-
-    @Override
-    public void onMovieClick(int position) {
-        Log.d("TAG", String.valueOf(position));
-        Intent i = new Intent(this,RetrofitMVVMMovieDetailsActivity.class);
-        i.putExtra("movie",movieListAdapter.getSelectedMovie(position));
-        startActivity(i);
-    }
-
-    @Override
-    public void onCategoryClick(String category) {
-
     }
 }

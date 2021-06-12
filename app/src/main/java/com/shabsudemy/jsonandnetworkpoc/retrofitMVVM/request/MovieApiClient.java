@@ -1,12 +1,10 @@
 package com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.request;
 
-import android.accounts.NetworkErrorException;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.AppExecutors;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.Credentials;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.models.Movie;
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.models.MovieResponse;

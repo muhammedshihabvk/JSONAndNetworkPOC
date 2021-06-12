@@ -1,7 +1,6 @@
 package com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.request;
 
 import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.Credentials;
-import com.shabsudemy.jsonandnetworkpoc.retrofitMVVM.MovieApi;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

@@ -39,25 +39,4 @@
         android:layout_gravity="center_horizontal"
         android:text="Retrofit MVVM Movie App" />
 
-    <Button
-        android:id="@+id/recyclerviewButton4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="sample" />
-
-    <Button
-        android:id="@+id/recyclerviewButton5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="sample" />
-
-    <Button
-        android:id="@+id/recyclerviewButton6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="sample" />
-
 </LinearLayout>

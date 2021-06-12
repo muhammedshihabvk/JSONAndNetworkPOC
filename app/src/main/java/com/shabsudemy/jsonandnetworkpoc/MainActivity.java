@@ -16,9 +16,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button jTRVButton1;
     Button jTRVButton2;
     Button jTRVButton3;
-    Button jTRVButton4;
-    Button jTRVButton5;
-    Button jTRVButton6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +28,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         jTRVButton1 = (Button) findViewById(R.id.recyclerviewButton1);
         jTRVButton2 = (Button) findViewById(R.id.recyclerviewButton2);
         jTRVButton3 = (Button) findViewById(R.id.recyclerviewButton3);
-        jTRVButton4 = (Button) findViewById(R.id.recyclerviewButton4);
-        jTRVButton5 = (Button) findViewById(R.id.recyclerviewButton5);
-        jTRVButton6 = (Button) findViewById(R.id.recyclerviewButton6);
 
         jTRVButton1.setOnClickListener(this);
         jTRVButton2.setOnClickListener(this);
         jTRVButton3.setOnClickListener(this);
-        jTRVButton4.setOnClickListener(this);
-        jTRVButton5.setOnClickListener(this);
-        jTRVButton6.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -54,11 +43,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 break;
             case R.id.recyclerviewButton2:
-                i= new Intent(this, RetrofitPOCActivity.class);
+                i = new Intent(this, RetrofitPOCActivity.class);
                 startActivity(i);
                 break;
             case R.id.recyclerviewButton3:
-                i= new Intent(this, RetrofitMVVMActivity.class);
+                i = new Intent(this, RetrofitMVVMActivity.class);
                 startActivity(i);
                 break;
             default:
